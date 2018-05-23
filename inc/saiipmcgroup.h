@@ -114,7 +114,17 @@ typedef enum _sai_ipmc_group_member_attr_t
 /**
  * @brief Create IPMC group
  *
- * @param[out] ipmc_group_id IPMC group id
+ * In multiple NPU scenario,the ingress NPU need to allocate a H/W resource
+ * called the IPMC index which will be indexed into table to give the ports
+ * list on which a multicast packet should go out, the other egress NPUs will
+ * use the IPMC index to read H/W table * directly without going through the
+ * lookup process based on pakcet's (S,G/*G).From the point of view of the
+ * upper users(SONIC),the * IPMC member are sets of router interface,and the
+ * same ipmc member can share a group,but from the ponit of  * view of NPNs,
+ * finally,the group member need to convert to port list,so the relationship
+ * between IPMC Group and IPMC entry must be 1:1
+ *
+ * @param[inout] ipmc_group_id IPMC group id
  * @param[in] switch_id Switch id
  * @param[in] attr_count Number of attributes
  * @param[in] attr_list Array of attributes
@@ -122,7 +132,7 @@ typedef enum _sai_ipmc_group_member_attr_t
  * @return #SAI_STATUS_SUCCESS on success, failure status code on error
  */
 typedef sai_status_t (*sai_create_ipmc_group_fn)(
-        _Out_ sai_object_id_t *ipmc_group_id,
+        _InOut_ sai_object_id_t *ipmc_group_id,
         _In_ sai_object_id_t switch_id,
         _In_ uint32_t attr_count,
         _In_ const sai_attribute_t *attr_list);
