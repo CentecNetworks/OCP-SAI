@@ -124,7 +124,11 @@ typedef enum _sai_l2mc_group_member_attr_t
 /**
  * @brief Create L2MC group
  *
- * @param[out] l2mc_group_id L2MC group id
+ * There is no problem with sharing member group mechanism in L2MC
+ * entry,but we suggest to use 1:1 mechanism because of the
+ * convenience of the L2MC member to be updated
+ *
+ * @param[inout] l2mc_group_id L2MC group id
  * @param[in] switch_id Switch id
  * @param[in] attr_count Number of attributes
  * @param[in] attr_list Array of attributes
@@ -132,7 +136,7 @@ typedef enum _sai_l2mc_group_member_attr_t
  * @return #SAI_STATUS_SUCCESS on success, failure status code on error
  */
 typedef sai_status_t (*sai_create_l2mc_group_fn)(
-        _Out_ sai_object_id_t *l2mc_group_id,
+        _Inout_ sai_object_id_t *l2mc_group_id,
         _In_ sai_object_id_t switch_id,
         _In_ uint32_t attr_count,
         _In_ const sai_attribute_t *attr_list);

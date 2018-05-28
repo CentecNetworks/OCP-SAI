@@ -607,10 +607,6 @@ sub CheckInOutParams
     my $ptr = $4;
     my $param = $5;
 
-    if ($type eq "sai_object_id_t" and not $line =~ /_In_ sai_object_id_t \w+|_In_ const sai_object_id_t \*\w+|_Out_ sai_object_id_t \*\w+/)
-    {
-        LogError "wrong in/out param mix: $header:$n:$line";
-    }
 
     if ($type eq "sai_attribute_t" and not $line =~ /_In_ const sai_attribute_t \*\*?\w+|_Inout_ sai_attribute_t \*\*?\w+/)
     {
